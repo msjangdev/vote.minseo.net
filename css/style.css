@@ -8145,7 +8145,7 @@ body {
   /*src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;*/
-  background: #000000;
+  background: #e45e81;
   font-size: 16px;
   line-height: 1.8;
   font-weight: 400;
@@ -8169,14 +8169,14 @@ a {
 h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
   line-height: 1.5;
-  color: white;
+  color: #ffffff;
   font-weight: 400; }
 
 .text-primary {
   color: #ffbd39 !important; }
 
 .ftco-navbar-light {
-  background: transparent !important;
+  background: #E45E81 !important;
   position: absolute;
   top: 0;
   left: 0;
@@ -8184,7 +8184,7 @@ h1, h2, h3, h4, h5,
   z-index: 3; }
   @media (max-width: 991.98px) {
     .ftco-navbar-light {
-      background: #000000 !important;
+      background: #E45E81 !important;
       position: relative;
       top: 0;
       padding-top: 0;
@@ -8231,7 +8231,7 @@ h1, h2, h3, h4, h5,
         height: 2px;
         bottom: 0;
         left: 0;
-        background: #ffbd39;
+        background: #F6CBD6;
         visibility: visible;
         -webkit-transform: scaleX(0);
         -moz-transform: scaleX(0);
@@ -8282,7 +8282,7 @@ h1, h2, h3, h4, h5,
   .ftco-navbar-light .navbar-nav > .nav-item .nav-link.active {
     background: transparent;
     background: none;
-    color: #ffbd39; }
+    color: #F6CBD6; }
     .ftco-navbar-light .navbar-nav > .nav-item .nav-link.active span:before {
       visibility: visible;
       -webkit-transform: scaleX(1);
@@ -8309,7 +8309,7 @@ h1, h2, h3, h4, h5,
     left: 0;
     top: 0;
     margin-top: -130px;
-    background: #000000 !important;
+    background: #E45E81 !important;
     -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     padding: 0 15px; }
@@ -8528,27 +8528,27 @@ h1, h2, h3, h4, h5,
         .owl-carousel.home-slider .slider-item .slider-text .subheading {
           color: #000000;
           font-weight: 600;
-          font-size: 14px;
+          font-size: 22px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #ffbd39; }
+          color: #Ffffff; }
         .owl-carousel.home-slider .slider-item .slider-text .text {
           position: relative;
           z-index: 1; }
         .owl-carousel.home-slider .slider-item .slider-text h1 {
           font-size: 60px;
-          color: #fff;
+          color: #ffffff;
           line-height: 1.2;
           font-weight: 800; }
           .owl-carousel.home-slider .slider-item .slider-text h1 span {
             font-weight: 800;
-            color: #ffbd39; }
+            color: #ffffff; }
           .owl-carousel.home-slider .slider-item .slider-text h2 span {
             /*font-weight: 800;*/
-            color: #ffbd39; }
+            color: #ffffff; }
           @media (max-width: 991.98px) {
             .owl-carousel.home-slider .slider-item .slider-text h1 {
-              color: #fff;
+              color: #ffffff;
               font-size: 50px; } }
           @media (max-width: 767.98px) {
             .owl-carousel.home-slider .slider-item .slider-text h1 {
@@ -8726,9 +8726,10 @@ h1, h2, h3, h4, h5,
   .btn:hover, .btn:active, .btn:focus {
     outline: none; }
   .btn.btn-primary {
-    background: #ffbd39;
-    border: 1px solid #ffbd39 !important;
-    color: #000000 !important; }
+    font-size: 17px;
+    background: #cb3159;
+    border: 1px solid #cb3159 !important;
+    color: #ffffff !important; }
     .btn.btn-primary:hover {
       border: 1px solid #ffbd39 !important;
       background: #ffbd39 !important;
@@ -8766,9 +8767,10 @@ h1, h2, h3, h4, h5,
       background: #fff !important;
       color: #fff; }
     .btn.btn-white.btn-outline-white {
+      font-size: 17px;
       border: 1px solid rgba(255, 255, 255, 0.5) !important;
-      background: transparent !important;
-      color: #fff !important; }
+      background: #FFFFFF !important;
+      color: #E45E81 !important; }
       .btn.btn-white.btn-outline-white:hover {
         border: 1px solid transparent;
         background: #ffbd39;
@@ -9095,7 +9097,7 @@ textarea.form-control {
 
 .ftco-footer {
   font-size: 16px;
-  background: #000000;
+  background: #cb3159;
   padding: 7em 0;
   z-index: 0; }
   .ftco-footer .ftco-footer-logo {
@@ -9199,7 +9201,7 @@ textarea.form-control {
     font-size: 13px;
     font-weight: 500;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     text-transform: uppercase;
     color: black;
     letter-spacing: 3px; }
