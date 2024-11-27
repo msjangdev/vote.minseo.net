@@ -2,16 +2,22 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>아이템 수집 게임</title>
+    <title>장민서 부회장 키우기</title>
     <!-- 모바일 화면 최적화를 위한 뷰포트 메타 태그 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS 추가 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
+        @font-face {
+        font-family: 'Tenada';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        }
         body {
+            font-family: 'Tenada';
             text-align: center;
-            background: #e0f7fa;
-            font-family: 'Arial', sans-serif;
+            background: #e45e81;
             overflow: hidden; /* 모바일에서 스크롤 방지 */
             margin: 0; /* 기본 여백 제거 */
         }
@@ -33,11 +39,11 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4">아이템 수집 게임</h1>
-        <p>아이템을 먹으면 점수 +1, 장애물을 맞으면 생명 -1!</p>
+        <h1 class="mt-4" style="color: white;">장민서 부회장 키우기</h1>
+        <p style="margin-top: 0px;">공약을 먹으면 점수 +1, 뇌물을 받으면 생명 -1!</p>
 
         <!-- 시작 화면 -->
-        <div id="startScreen">
+        <div id="startScreen" style="margin-top: 30px;">
             <h2>상위 랭킹</h2>
             <ol id="highScoresList"></ol>
             <button id="startButton" class="btn btn-success">게임 시작</button>
