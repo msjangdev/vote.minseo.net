@@ -88,8 +88,8 @@ let timeElapsed = 0; // 경과 시간 (초 단위)
 const character = {
     x: canvas.width / 2 - 25,
     y: canvas.height - 100,
-    width: 50,
-    height: 50,
+    width: 75,
+    height: 75,
     speed: 5,
     maxSpeed: 7, // 캐릭터의 최대 속도 제한
     moveLeft: false,
