@@ -302,15 +302,60 @@ function render() {
 
 // 게임 종료 처리
 function endGame() {
+    isGameOver = true;
+
+    // 게임 오버 화면 표시
+    showGameOverScreen();
+
+    // 메인 창에 점수 전달
     if (window.opener && !window.opener.closed) {
-        window.opener.receiveScore(score);
+        window.opener.postMessage({ type: 'GAME_OVER', score: score }, '*');
     } else {
-        alert('점수를 저장할 수 없습니다. 원본 창이 닫혀 있습니다.');
-    }
+        alert('점수를 저장할 수 없습니다. 메인 창이 닫혀 있습니다.');
+    } 
 
-    // 게임 창 닫기
-    window.close();    
+}
 
+function showGameOverScreen() {
+    // 전체 화면을 덮는 DIV 생성
+    const gameOverDiv = document.createElement('div');
+    gameOverDiv.style.position = 'fixed';
+    gameOverDiv.style.top = '0';
+    gameOverDiv.style.left = '0';
+    gameOverDiv.style.width = '100%';
+    gameOverDiv.style.height = '100%';
+    gameOverDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    gameOverDiv.style.display = 'flex';
+    gameOverDiv.style.flexDirection = 'column';
+    gameOverDiv.style.justifyContent = 'center';
+    gameOverDiv.style.alignItems = 'center';
+    gameOverDiv.style.zIndex = '1000';
+
+    // 게임 오버 메시지
+    const gameOverText = document.createElement('h1');
+    gameOverText.style.color = 'white';
+    gameOverText.textContent = '게임 오버';
+
+    // 최종 점수 표시
+    const finalScoreText = document.createElement('p');
+    finalScoreText.style.color = 'white';
+    finalScoreText.textContent = `최종 점수: ${score}`;
+
+    // 닫기 버튼
+    const closeButton = document.createElement('button');
+    closeButton.textContent = '닫기';
+    closeButton.className = 'btn btn-primary';
+    closeButton.style.marginTop = '20px';
+    closeButton.addEventListener('click', () => {
+        window.close();
+    });
+
+    // 요소 추가
+    gameOverDiv.appendChild(gameOverText);
+    gameOverDiv.appendChild(finalScoreText);
+    gameOverDiv.appendChild(closeButton);
+
+    document.body.appendChild(gameOverDiv);
 }
 
 // 점수 저장 (Firebase 사용)
