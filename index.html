@@ -302,6 +302,26 @@
 
         // 창 크기가 변경될 때 다시 설정
         window.addEventListener('resize', setIframeSize);
+/*
+	 // Fullscreen 활성화 함수
+	 function toggleFullscreen(iframe) {
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen(); // 표준 방식
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen(); // Safari 방식
+            } else if (iframe.mozRequestFullScreen) {
+                iframe.mozRequestFullScreen(); // Firefox 방식
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen(); // IE 방식
+            } else {
+                alert("Your browser does not support fullscreen mode.");
+            }
+        }
+
+        // iFrame 클릭 시 전체화면 전환
+        const iframe = document.getElementById('game_frame');
+        iframe.addEventListener('click', () => toggleFullscreen(iframe));*/
+
   	</script>
 
 <script src="js/jquery.min.js"></script>

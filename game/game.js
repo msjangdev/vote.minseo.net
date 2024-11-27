@@ -37,7 +37,7 @@ function imageLoaded() {
     imagesLoaded++;
     if (imagesLoaded === imagesToLoad) {
         // 모든 이미지가 로드되면 게임 시작 가능
-        displayHighScores(); // 랭킹 표시
+        startGame(); // 게임 시작
     }
 }
 
@@ -88,10 +88,10 @@ let timeElapsed = 0; // 경과 시간 (초 단위)
 const character = {
     x: canvas.width / 2 - 25,
     y: canvas.height - 100,
-    width: 75,
-    height: 75,
-    speed: 7,
-    maxSpeed: 10, // 캐릭터의 최대 속도 제한
+    width: 50,
+    height: 50,
+    speed: 5,
+    maxSpeed: 7, // 캐릭터의 최대 속도 제한
     moveLeft: false,
     moveRight: false
 };
@@ -324,7 +324,7 @@ document.getElementById("saveScoreButton").addEventListener("click", () => {
     const playerName = document.getElementById("playerName").value || "Unknown";
     saveScoreToFirebase(playerName, score);
     $('#gameOverModal').modal('hide');
-    location.reload(); // 페이지 새로고침하여 시작 화면으로 돌아감
+    window.close(); // 게임 창 닫기
 });
 
 // 다시하기 버튼 이벤트
@@ -344,15 +344,6 @@ function gameLoop() {
 
 // 게임 시작 함수
 function startGame() {
-    if (imagesLoaded !== imagesToLoad) {
-        alert("이미지를 불러오는 중입니다. 잠시만 기다려주세요.");
-        return;
-    }
-    document.getElementById("startScreen").style.display = 'none';
-    canvas.style.display = 'block';
-    document.getElementById("gameInfo").style.display = 'flex';
-    document.querySelector('.control-buttons').style.display = 'flex';
-
     // 캔버스 크기 조정
     adjustCanvasSize();
 
@@ -377,27 +368,4 @@ function adjustCanvasSize() {
 
 let spawnObjectInterval;
 
-// 시작 버튼 이벤트
-document.getElementById("startButton").addEventListener("click", () => {
-    startGame();
-});
-
-// 상위 랭킹 표시 (Firebase 사용)
-// 이미지가 모두 로드된 후에 호출하도록 변경
-function displayHighScores() {
-    const highScoresList = document.getElementById("highScoresList");
-    const scoresRef = database.ref('scores');
-    scoresRef.orderByChild('score').limitToLast(5).once('value', snapshot => {
-        const scores = [];
-        snapshot.forEach(childSnapshot => {
-            scores.push(childSnapshot.val());
-        });
-        // 점수 내림차순으로 정렬
-        scores.sort((a, b) => b.score - a.score);
-        highScoresList.innerHTML = scores
-            .map(score => `<li>${score.name} - ${score.score}점</li>`)
-            .join('');
-    });
-}
-
-// 이미지 로드가 완료되면 displayHighScores()가 호출됩니다.
+// 이미지 로드가 완료되면 startGame()이 호출됩니다.
