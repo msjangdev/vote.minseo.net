@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/magnific-popup.css">
 
     <link rel="stylesheet" href="css/aos.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="css/ionicons.min.css">
     
@@ -47,7 +48,7 @@
 	      </div>
 	    </div>
 	  </nav>
-	  <section id="home-section" class="hero">
+	  <!--<section id="home-section" class="hero">
 		  <div class="home-slider  owl-carousel">
 	      <div class="slider-item ">
 	      	<div class="overlay"></div>
@@ -58,18 +59,45 @@
 	          	</div>
 		          <div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
 		          	<div class="text">
-		          		<span class="subheading"><!--<span style="color: white;">경기과학고</span>--> 전교부회장 후보</span>
+		          		<span class="subheading">전교부회장 후보</span>
 			            <h1 class="mt-1">2번 <span>장 민 서</span></h1>
 			            <h2 class="mb-4" id="slogan-gshs"><span>경곽</span>을 다시 위대하게</h2>
 			            <p><button onclick="handleSupportClick()" class="btn btn-primary py-3 px-4">공약 보기</button>
-							<a href="#" class="btn btn-white btn-outline-white py-3 px-4">포스터 보기</a></p>
-		            </div>
-		          </div>
-	        	</div>
-	        </div>
-	      </div>
-	    </div>
-    </section>
+							<a href="#" class="btn btn-white btn-outline-white py-3 px-4" data-toogle="modal" data-target="#posterModal">포스터 보기</a></p>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</section>-->
+		<section id="home-section" class="hero">
+			<div class="home-slider  owl-carousel">
+			<div class="slider-item ">
+				<div class="overlay"></div>
+			  <div class="container">
+				<div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
+					<div class="one-third js-fullheight order-md-last img" style="background-image:url(images/bg_1.png);">
+						<div class="overlay"></div>
+					</div>
+					<div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+						<div class="text">
+							<span class="subheading">전교부회장 후보</span>
+						  <h1 class="mt-1">2번 <span>장 민 서</span></h1>
+						  <h2 class="mb-4" id="slogan-gshs"><span>경곽</span>을 다시 위대하게</h2>
+						  <p><button class="btn btn-primary py-3 px-4">게임하기</button>
+							<!-- <a href="#" class="btn btn-white btn-outline-white py-3 px-4" data-toggle="modal" data-target="#posterModal">알아보기</a></p> -->
+							<a href="#about-section" class="btn btn-white btn-outline-white py-3 px-4">알아보기</a></p>
+						  </div>
+					  </div>
+					  </div>
+				  </div>
+			  </div>
+			  </div>
+		  </section>
+
+  
+
 
     <section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
     	<div class="container">
@@ -115,9 +143,9 @@
     	<div class="container">
     		<div class="row justify-content-center pb-5">
           <div class="col-md-10 heading-section text-center ftco-animate">
-          	<h1 class="big big-2">Resume</h1>
-            <h2 class="mb-4">Resume</h2>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+          	<h1 class="big big-2">공 약</h1>
+            <h2 class="mb-4">공 약</h2>
+            <p style="color:white">8개월 간, 47명의 학생들이 낸 126개의 아이디어를 종합하여 개발하였습니다.</p>
           </div>
         </div>
     		<div class="row">
@@ -658,6 +686,22 @@
       </div>
     </footer>
     
+	<!-- Poster Modal -->
+	<div class="modal fade" id="posterModal" tabindex="-1" role="dialog" aria-labelledby="posterModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="posterModalLabel">포스터</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<img src="./poster.png" alt="Poster" class="img-fluid">
+				</div>
+			</div>
+		</div>
+	</div>
   
 
   <!-- loader -->
@@ -709,6 +753,9 @@
     }
   </script>
 
-    
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-migrate-3.0.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
   </body>
 </html>
