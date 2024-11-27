@@ -102,6 +102,29 @@
         document.getElementById("startButton").addEventListener("click", () => {
             window.open('game.html', '_blank', 'width=600,height=800');
         });
+
+        // 점수 저장 함수
+        function saveScoreToFirebase(name, score) {
+            const scoresRef = database.ref('scores');
+            const newScoreRef = scoresRef.push();
+            newScoreRef.set({
+                name: name,
+                score: score
+            }).then(() => {
+                alert('점수가 저장되었습니다!');
+                displayHighScores(); // 랭킹 업데이트
+            }).catch(error => {
+                alert('점수 저장 중 오류가 발생했습니다: ' + error.message);
+            });
+        }
+
+        // 새 창에서 점수를 받아 저장하는 함수
+        function receiveScore(finalScore) {
+            const playerName = prompt("이름을 입력하세요:", "Unknown");
+            if (playerName !== null) {
+                saveScoreToFirebase(playerName, finalScore);
+            }
+        }
     </script>
 </body>
 </html>

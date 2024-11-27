@@ -302,11 +302,15 @@ function render() {
 
 // 게임 종료 처리
 function endGame() {
-    // 최종 점수 표시
-    document.getElementById("finalScore").textContent = `최종 점수: ${score}`;
-    // 모달 창 표시
-    $('#gameOverModal').modal('show');
-    clearInterval(spawnObjectInterval); // 오브젝트 생성 중지
+    if (window.opener && !window.opener.closed) {
+        window.opener.receiveScore(score);
+    } else {
+        alert('점수를 저장할 수 없습니다. 원본 창이 닫혀 있습니다.');
+    }
+
+    // 게임 창 닫기
+    window.close();    
+
 }
 
 // 점수 저장 (Firebase 사용)
