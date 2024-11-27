@@ -85,7 +85,7 @@
 							<span class="subheading">전교부회장 후보</span>
 						  <h1 class="mt-1">2번 <span>장 민 서</span></h1>
 						  <h2 class="mb-4" id="slogan-gshs"><span>경곽</span>을 다시 위대하게</h2>
-						  <p><button class="btn btn-primary py-3 px-4">게임하기</button>
+						  <p><a href="#game-section" class="btn btn-primary py-3 px-4">게임하기</a>
 							<!-- <a href="#" class="btn btn-white btn-outline-white py-3 px-4" data-toggle="modal" data-target="#posterModal">알아보기</a></p> -->
 							<a href="#about-section" class="btn btn-white btn-outline-white py-3 px-4">알아보기</a></p>
 						  </div>
@@ -244,8 +244,8 @@
 			</div> 
 		</section>-->
 	
-		<section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
-			<div class="container">
+		<section class="ftco-about img ftco-section ftco-no-pb" id="game-section">
+			<div class="container" style="padding:0px; margin:0px;text-align: center;">
 			   <iframe src="./game/index.html" id="game_frame"></iframe>
 		   </div> 
 	   </section>
@@ -293,8 +293,8 @@
   <script>
     function setIframeSize() {
             const iframe = document.getElementById('game_frame');
-            iframe.style.width = `${window.innerWidth-20}px`;
-            iframe.style.height = `${window.innerHeight-35}px`;
+            iframe.style.width = `${window.innerWidth-25}px`;
+            iframe.style.height = `${window.innerHeight-45}px`;
         }
 
         // 설정 초기화
