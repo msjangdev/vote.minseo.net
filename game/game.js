@@ -361,7 +361,7 @@ function resetGame() {
     score = 0;
     lives = 3;
     isGameOver = false;
-    gameSpeed = 1;
+    gameSpeed = 0.3;
     spawnInterval = 1000;
     powerUpActive = false;
     powerUpTimer = 0;
