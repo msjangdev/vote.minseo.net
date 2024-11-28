@@ -151,8 +151,8 @@ function spawnObject() {
     let obj = null;
 
     // 확률 조정
-    let obstacleProbability = 0.6 + Math.min(timeElapsed * 0.01, 0.3); // 장애물 확률 (최대 90%)
-    let itemProbability = 0.55; // 아이템 확률 (약간 증가)
+    let obstacleProbability = 0.1 + Math.min(timeElapsed * 0.01, 0.3); // 장애물 확률 (최대 90%)
+    let itemProbability = 1; // 아이템 확률 (약간 증가)
     let powerUpProbability = 0.05; // 파워업 확률 (크게 감소)
 
     if (rand < obstacleProbability) {
@@ -284,7 +284,7 @@ function update() {
     }
 
     // 난이도 증가
-    gameSpeed += 0.001; // 속도 증가 폭 상승
+    gameSpeed += 0.00001; // 속도 증가 폭 상승
     character.speed = Math.min(character.maxSpeed, character.speed + 0.0002); // 최대 속도 제한
 
     // 경과 시간 업데이트
