@@ -149,8 +149,8 @@ function spawnObject() {
         obj = {
             x: Math.random() * (canvas.width - 50),
             y: -50,
-            width: 50,
-            height: 50,
+            width: 35,
+            height: 35,
             speed: (6 + Math.random() * 4) * gameSpeed, // 속도 증가
             img,
             type: "obstacle"
@@ -161,8 +161,8 @@ function spawnObject() {
         obj = {
             x: Math.random() * (canvas.width - 50),
             y: -50,
-            width: 50,
-            height: 50,
+            width: 35,
+            height: 35,
             speed: (6 + Math.random() * 4) * gameSpeed,
             img,
             type: "item"
@@ -172,8 +172,8 @@ function spawnObject() {
         obj = {
             x: Math.random() * (canvas.width - 50),
             y: -50,
-            width: 50,
-            height: 50,
+            width: 35,
+            height: 35,
             speed: (6 + Math.random() * 4) * gameSpeed,
             img: powerUpImg,
             type: "powerup"
@@ -420,10 +420,10 @@ function adjustCanvasSize() {
     const containerWidth = document.body.clientWidth;
     const maxWidth = 600; // 최대 너비 설정
     const canvasWidth = Math.min(containerWidth, maxWidth);
-    const canvasHeight = canvasWidth * 1.5; // 2:3 비율 유지
+    const canvasHeight = canvasWidth * 1; // 2:3 비율 유지
 
     canvas.width = 400; // 그림 좌표계는 그대로 유지
-    canvas.height = 600;
+    canvas.height = 375;
 
     // 캔버스 스타일 크기 조정
     canvas.style.width = canvasWidth + 'px';
