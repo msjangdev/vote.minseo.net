@@ -14,7 +14,12 @@
         font-weight: normal;
         font-style: normal;
         }
+        img, a {
+            user-select: none; /* 이미지, 링크 선택 방지 */
+            pointer-events: none; /* 마우스 이벤트 제거 */
+        }
         body {
+            user-select: none;
             font-family: 'Tenada';
             text-align: center;
             background: #e45e81;

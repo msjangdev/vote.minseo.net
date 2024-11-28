@@ -16,6 +16,18 @@ var database = firebase.database();
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+// 터치 줌 방지
+document.addEventListener('gesturestart', function (event) {
+    event.preventDefault();
+});
+
+// Ctrl + 휠 줌 방지
+document.addEventListener('wheel', function (event) {
+    if (event.ctrlKey) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
 // 이미지 로드
 const characterImg = new Image();
 const characterPlusImg = new Image();
