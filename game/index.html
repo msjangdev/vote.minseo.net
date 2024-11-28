@@ -21,10 +21,59 @@
             overflow: hidden; /* 모바일에서 스크롤 방지 */
             margin: 0; /* 기본 여백 제거 */
         }
+        #gameCanvas {
+            background: #fff;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            /* 모바일 화면에 맞게 캔버스 크기 조정 */
+            width: 100%;
+            height: auto;
+            max-width: 600px;
+            display: none; /* 시작 전에는 숨김 */
+        }
+        .control-buttons {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            display: none; /* 시작 전에는 숨김 */
+        }
+        .control-buttons button {
+            width: 80px;
+            height: 80px;
+            margin: 0 20px;
+            border-radius: 50%;
+            font-size: 24px;
+        }
         #startScreen {
             margin-top: 50px;
         }
-        /* 컨테이너를 전체 너비로 */
+        #notification {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: red;
+            display: none;
+            z-index: 1000;
+        }
+        #gameInfo {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: none; /* 시작 전에는 숨김 */
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #lives {
+            font-size: 24px; /* 이모티콘 크기 조정 */
+        }
         .container {
             width: 100%;
             max-width: 600px;
@@ -39,16 +88,56 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-4" style="color: white;">장민서 부회장 키우기</h1>
+        <h1 class="mt-5" style="color: white;">장민서 부회장 키우기</h1>
         <p style="margin-top: 0px;">공약을 먹으면 점수 +1, 뇌물을 받으면 생명 -1!</p>
 
         <!-- 시작 화면 -->
-        <div id="startScreen" style="margin-top: 30px;">
+        <div id="startScreen">
             <h2>상위 랭킹</h2>
             <ol id="highScoresList"></ol>
             <button id="startButton" class="btn btn-success">게임 시작</button>
         </div>
+
+        <!-- 게임 정보 -->
+        <div id="gameInfo" class="d-flex">
+            <div id="score">점수: 0</div>
+            <div id="lives">❤️❤️❤️</div>
+        </div>
+
+        <!-- 게임 캔버스 -->
+        <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+        <!-- 알림 메시지 -->
+        <div id="notification"></div>
+
+        <!-- 조작 버튼 -->
+        <div class="control-buttons">
+            <button id="leftButton" class="btn btn-primary">&larr;</button>
+            <button id="rightButton" class="btn btn-primary">&rarr;</button>
+        </div>
     </div>
+
+    <!-- 게임 종료 모달 -->
+    <div class="modal fade" id="gameOverModal" tabindex="-1" role="dialog" aria-labelledby="gameOverModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="gameOverModalLabel">게임 종료!</h4>
+            </div>
+            <div class="modal-body">
+              <p id="finalScore">최종 점수: 0</p>
+              <div class="form-group">
+                <label for="playerName">이름을 입력하세요:</label>
+                <input type="text" class="form-control" id="playerName">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="saveScoreButton" class="btn btn-primary">기록</button>
+              <button type="button" id="retryButton" class="btn btn-secondary">다시하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!-- Firebase SDK 추가 -->
     <!-- Firebase App (기본 SDK) -->
@@ -63,78 +152,6 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- 랭킹 표시 스크립트 -->
-    <script>
-        // Firebase 설정 정보 (Firebase 콘솔에서 복사한 내용)
-        var firebaseConfig = {
-            apiKey: "AIzaSyAc516mkGvzpvloI6Rlq4Y_Zjd3PZNjMUg",
-            authDomain: "minseo-vote-game.firebaseapp.com",
-            databaseURL: "https://minseo-vote-game-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "minseo-vote-game",
-            storageBucket: "minseo-vote-game.firebasestorage.app",
-            messagingSenderId: "459457189180",
-            appId: "1:459457189180:web:f921d96074df13156e7a39",
-            measurementId: "G-YFMH3NYFR8"
-        };
-        // Firebase 초기화
-        firebase.initializeApp(firebaseConfig);
-        var database = firebase.database();
-
-        // 상위 랭킹 표시 (Firebase 사용)
-        function displayHighScores() {
-            const highScoresList = document.getElementById("highScoresList");
-            const scoresRef = database.ref('scores');
-            scoresRef.orderByChild('score').limitToLast(5).once('value', snapshot => {
-                const scores = [];
-                snapshot.forEach(childSnapshot => {
-                    scores.push(childSnapshot.val());
-                });
-                // 점수 내림차순으로 정렬
-                scores.sort((a, b) => b.score - a.score);
-                highScoresList.innerHTML = scores
-                    .map(score => `<li>${score.name} - ${score.score}점</li>`)
-                    .join('');
-            });
-        }
-        displayHighScores();
-
-        // 게임 시작 버튼 이벤트
-        document.getElementById("startButton").addEventListener("click", () => {
-            window.open('game.html', '_blank', 'width=600,height=800');
-        });
-
-        // 점수 저장 함수
-        function saveScoreToFirebase(name, score) {
-            const scoresRef = database.ref('scores');
-            const newScoreRef = scoresRef.push();
-            newScoreRef.set({
-                name: name,
-                score: score
-            }).then(() => {
-                alert('점수가 저장되었습니다!');
-                displayHighScores(); // 랭킹 업데이트
-            }).catch(error => {
-                alert('점수 저장 중 오류가 발생했습니다: ' + error.message);
-            });
-        }
-
-        // 게임 창으로부터 메시지 받기
-        window.addEventListener('message', function(event) {
-            // 보안을 위해 origin 확인 (예: 'http://localhost:8000')
-            // if (event.origin !== 'http://localhost:8000') return;
-
-            if (event.data && event.data.type === 'GAME_OVER') {
-                const finalScore = event.data.score;
-                receiveScore(finalScore);
-            }
-        });
-
-        // 점수 저장을 위한 함수
-        function receiveScore(finalScore) {
-            const playerName = prompt("이름을 입력하세요:", "Unknown");
-            if (playerName !== null) {
-                saveScoreToFirebase(playerName, finalScore);
-            }
-        }
-    </script>
-</body>
+     <script src="game.js"></script>
+    </body>
 </html>

@@ -36,8 +36,8 @@ let imagesLoaded = 0; // 로드된 이미지 수
 function imageLoaded() {
     imagesLoaded++;
     if (imagesLoaded === imagesToLoad) {
-        // 모든 이미지가 로드되면 게임 시작 가능
-        startGame(); // 게임 시작
+        // 모든 이미지가 로드되면 랭킹 표시
+        displayHighScores();
     }
 }
 
@@ -88,8 +88,8 @@ let timeElapsed = 0; // 경과 시간 (초 단위)
 const character = {
     x: canvas.width / 2 - 25,
     y: canvas.height - 100,
-    width: 75,
-    height: 75,
+    width: 50,
+    height: 50,
     speed: 5,
     maxSpeed: 7, // 캐릭터의 최대 속도 제한
     moveLeft: false,
@@ -259,6 +259,7 @@ function update() {
         powerUpTimer -= 1 / 60;
         if (powerUpTimer <= 0) {
             powerUpActive = false;
+            showNotification("무적 해제", "white");
         }
     }
 
@@ -301,62 +302,22 @@ function render() {
 }
 
 // 게임 종료 처리
+// 게임 종료 처리
 function endGame() {
+    // 게임 루프 중지
     isGameOver = true;
 
-    // 게임 오버 화면 표시
-    showGameOverScreen();
-
-    // 메인 창에 점수 전달
-    if (window.opener && !window.opener.closed) {
-        window.opener.postMessage({ type: 'GAME_OVER', score: score }, '*');
-    } else {
-        alert('점수를 저장할 수 없습니다. 메인 창이 닫혀 있습니다.');
-    } 
-
-}
-
-function showGameOverScreen() {
-    // 전체 화면을 덮는 DIV 생성
-    const gameOverDiv = document.createElement('div');
-    gameOverDiv.style.position = 'fixed';
-    gameOverDiv.style.top = '0';
-    gameOverDiv.style.left = '0';
-    gameOverDiv.style.width = '100%';
-    gameOverDiv.style.height = '100%';
-    gameOverDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    gameOverDiv.style.display = 'flex';
-    gameOverDiv.style.flexDirection = 'column';
-    gameOverDiv.style.justifyContent = 'center';
-    gameOverDiv.style.alignItems = 'center';
-    gameOverDiv.style.zIndex = '1000';
-
-    // 게임 오버 메시지
-    const gameOverText = document.createElement('h1');
-    gameOverText.style.color = 'white';
-    gameOverText.textContent = '게임 오버';
+    // 알림 메시지 숨기기
+    document.getElementById("notification").style.display = 'none';
+    notificationTimer = 0; // 타이머 초기화
 
     // 최종 점수 표시
-    const finalScoreText = document.createElement('p');
-    finalScoreText.style.color = 'white';
-    finalScoreText.textContent = `최종 점수: ${score}`;
-
-    // 닫기 버튼
-    const closeButton = document.createElement('button');
-    closeButton.textContent = '닫기';
-    closeButton.className = 'btn btn-primary';
-    closeButton.style.marginTop = '20px';
-    closeButton.addEventListener('click', () => {
-        window.close();
-    });
-
-    // 요소 추가
-    gameOverDiv.appendChild(gameOverText);
-    gameOverDiv.appendChild(finalScoreText);
-    gameOverDiv.appendChild(closeButton);
-
-    document.body.appendChild(gameOverDiv);
+    document.getElementById("finalScore").textContent = `최종 점수: ${score}`;
+    // 모달 창 표시
+    $('#gameOverModal').modal('show');
+    clearInterval(spawnObjectInterval); // 오브젝트 생성 중지
 }
+
 
 // 점수 저장 (Firebase 사용)
 function saveScoreToFirebase(name, score) {
@@ -365,6 +326,11 @@ function saveScoreToFirebase(name, score) {
     newScoreRef.set({
         name: name,
         score: score
+    }).then(() => {
+        // 점수 저장 완료 후 랭킹 업데이트
+        displayHighScores();
+    }).catch(error => {
+        alert('점수 저장 중 오류가 발생했습니다: ' + error.message);
     });
 }
 
@@ -373,14 +339,53 @@ document.getElementById("saveScoreButton").addEventListener("click", () => {
     const playerName = document.getElementById("playerName").value || "Unknown";
     saveScoreToFirebase(playerName, score);
     $('#gameOverModal').modal('hide');
-    window.close(); // 게임 창 닫기
+    // 게임 요소 숨기기
+    canvas.style.display = 'none';
+    document.getElementById("gameInfo").style.display = 'none';
+    document.querySelector('.control-buttons').style.display = 'none';
+    // 시작 화면 보이기
+    document.getElementById("startScreen").style.display = 'block';
+    // 게임 종료 후 전체 화면을 종료하지 않음
 });
 
-// 다시하기 버튼 이벤트
+// '다시하기' 버튼 이벤트
 document.getElementById("retryButton").addEventListener("click", () => {
     $('#gameOverModal').modal('hide');
-    location.reload(); // 페이지 새로고침하여 게임 재시작
+    // 게임 재시작
+    resetGame();
 });
+
+// 게임 초기화 함수 추가
+function resetGame() {
+    // 변수 초기화
+    score = 0;
+    lives = 3;
+    isGameOver = false;
+    gameSpeed = 1;
+    spawnInterval = 1000;
+    powerUpActive = false;
+    powerUpTimer = 0;
+    notificationTimer = 0;
+    timeElapsed = 0;
+
+    // 캐릭터 위치 초기화
+    character.x = canvas.width / 2 - 25;
+
+    // 오브젝트 배열 초기화
+    objects.length = 0;
+
+    // 게임 정보 업데이트
+    document.getElementById("score").textContent = `점수: ${score}`;
+    const livesContainer = document.getElementById("lives");
+    livesContainer.textContent = '❤️❤️❤️';
+
+    // 오브젝트 생성 재시작
+    clearInterval(spawnObjectInterval);
+    spawnObjectInterval = setInterval(spawnObject, spawnInterval);
+
+    // 게임 루프 재시작
+    gameLoop();
+}
 
 // 게임 루프
 function gameLoop() {
@@ -391,13 +396,23 @@ function gameLoop() {
     }
 }
 
-// 게임 시작 함수
+// 게임 시작 함수 수정
 function startGame() {
+    // 시작 화면 숨기기
+    document.getElementById("startScreen").style.display = 'none';
+    // 게임 요소 보이기
+    canvas.style.display = 'block';
+    document.getElementById("gameInfo").style.display = 'flex';
+    document.querySelector('.control-buttons').style.display = 'flex';
+
     // 캔버스 크기 조정
     adjustCanvasSize();
 
-    spawnObjectInterval = setInterval(spawnObject, spawnInterval);
-    gameLoop();
+    // 전체 화면 요청
+    enterFullScreen();
+
+    // 게임 초기화
+    resetGame();
 }
 
 // 캔버스 크기를 창 크기에 맞게 조정
@@ -417,4 +432,52 @@ function adjustCanvasSize() {
 
 let spawnObjectInterval;
 
-// 이미지 로드가 완료되면 startGame()이 호출됩니다.
+// 시작 버튼 이벤트
+document.getElementById("startButton").addEventListener("click", () => {
+    startGame();
+});
+
+// 상위 랭킹 표시 (Firebase 사용)
+function displayHighScores() {
+    const highScoresList = document.getElementById("highScoresList");
+    const scoresRef = database.ref('scores');
+    scoresRef.orderByChild('score').limitToLast(5).once('value', snapshot => {
+        const scores = [];
+        snapshot.forEach(childSnapshot => {
+            scores.push(childSnapshot.val());
+        });
+        // 점수 내림차순으로 정렬
+        scores.sort((a, b) => b.score - a.score);
+        highScoresList.innerHTML = scores
+            .map(score => `<li>${score.name} - ${score.score}점</li>`)
+            .join('');
+    });
+}
+
+// 이미지 로드가 완료되면 displayHighScores()가 호출됩니다.
+window.onload = () => {
+    // 이미지 로드 완료 대기
+};
+
+// 전체 화면 전환 함수
+function enterFullScreen() {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+    }
+}
+
+// 전체 화면 종료 함수 (사용하지 않음)
+// function exitFullScreen() {
+//     if (document.exitFullscreen) {
+//         document.exitFullscreen();
+//     } else if (document.webkitExitFullscreen) { /* Safari */
+//         document.webkitExitFullscreen();
+//     } else if (document.msExitFullscreen) { /* IE11 */
+//         document.msExitFullscreen();
+//     }
+// }
