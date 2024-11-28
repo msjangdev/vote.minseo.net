@@ -284,7 +284,7 @@ function update() {
     }
 
     // 난이도 증가
-    gameSpeed += 0.00001; // 속도 증가 폭 상승
+    gameSpeed += 0.001; // 속도 증가 폭 상승
     character.speed = Math.min(character.maxSpeed, character.speed + 0.0002); // 최대 속도 제한
 
     // 경과 시간 업데이트
