@@ -140,7 +140,7 @@ function spawnObject() {
 
     // 확률 조정
     let obstacleProbability = 0.6 + Math.min(timeElapsed * 0.01, 0.3); // 장애물 확률 (최대 90%)
-    let itemProbability = 0.35; // 아이템 확률 (약간 증가)
+    let itemProbability = 0.55; // 아이템 확률 (약간 증가)
     let powerUpProbability = 0.05; // 파워업 확률 (크게 감소)
 
     if (rand < obstacleProbability) {
