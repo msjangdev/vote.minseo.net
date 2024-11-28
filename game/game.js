@@ -161,8 +161,8 @@ function spawnObject() {
         obj = {
             x: Math.random() * (canvas.width - 50),
             y: -50,
-            width: 35,
-            height: 35,
+            width: 55,
+            height: 55,
             speed: (6 + Math.random() * 4) * gameSpeed,
             img,
             type: "item"
@@ -409,7 +409,7 @@ function startGame() {
     adjustCanvasSize();
 
     // 전체 화면 요청
-    enterFullScreen();
+    //enterFullScreen();
 
     // 게임 초기화
     resetGame();
