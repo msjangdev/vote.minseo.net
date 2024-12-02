@@ -461,7 +461,12 @@ function displayHighScores() {
         // 점수 내림차순으로 정렬
         scores.sort((a, b) => b.score - a.score);
         highScoresList.innerHTML = scores
-            .map(score => `<li>${score.name} - ${score.score}점</li>`)
+            .map(score => {
+                // 이름과 점수를 3자로 제한하고 이스케이프 처리
+                const safeName = escapeHTML(score.name.substring(0, 3));
+                const safeScore = escapeHTML(score.score.toString().substring(0, 3));
+                return `<li>${safeName} - ${safeScore}점</li>`;
+            })
             .join('');
     });
 }
@@ -483,13 +488,14 @@ function enterFullScreen() {
     }
 }
 
-// 전체 화면 종료 함수 (사용하지 않음)
-// function exitFullScreen() {
-//     if (document.exitFullscreen) {
-//         document.exitFullscreen();
-//     } else if (document.webkitExitFullscreen) { /* Safari */
-//         document.webkitExitFullscreen();
-//     } else if (document.msExitFullscreen) { /* IE11 */
-//         document.msExitFullscreen();
-//     }
-// }
+// XSS 방지를 위한 이스케이프 함수
+function escapeHTML(str) {
+    if (typeof str !== 'string') {
+        str = String(str);
+    }
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+}
