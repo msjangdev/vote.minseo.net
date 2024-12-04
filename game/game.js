@@ -453,7 +453,9 @@ document.getElementById("startButton").addEventListener("click", () => {
 function displayHighScores() {
     const highScoresList = document.getElementById("highScoresList");
     const scoresRef = database.ref('scores');
-    scoresRef.orderByChild('score').limitToLast(5).once('value', snapshot => {
+    
+    // limitToLast(5)를 제거하여 모든 점수를 가져옵니다.
+    scoresRef.orderByChild('score').once('value', snapshot => {
         const scores = [];
         snapshot.forEach(childSnapshot => {
             scores.push(childSnapshot.val());
@@ -464,7 +466,7 @@ function displayHighScores() {
             .map(score => {
                 // 이름과 점수를 3자로 제한하고 이스케이프 처리
                 const safeName = escapeHTML(score.name.substring(0, 3));
-                const safeScore = escapeHTML(score.score.toString().substring(0, 3));
+                const safeScore = escapeHTML(score.score.toString());
                 return `<li>${safeName} - ${safeScore}점</li>`;
             })
             .join('');
