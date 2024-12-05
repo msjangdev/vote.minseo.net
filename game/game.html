@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         @font-face {
-        font-family: 'Tenada';
-        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
-        font-weight: normal;
-        font-style: normal;
+            font-family: 'Tenada';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
         }
         body {
-
             text-align: center;
             background: #e0f7fa;
             font-family: 'Tenada';
@@ -91,6 +90,9 @@
     <!-- 알림 메시지 -->
     <div id="notification"></div>
 
+    <!-- 반복 재생되는 배경 음악 -->
+    <audio id="backgroundMusic" src="../song.mp3" loop autoplay></audio>
+
     <!-- 조작 버튼 -->
     <div class="control-buttons">
         <button id="leftButton" class="btn btn-primary">&larr;</button>
@@ -107,7 +109,7 @@
           <div class="modal-body">
             <p id="finalScore">최종 점수: ${score}</p>
             <div class="form-group">
-              <label for="playerName">이름을 입력하세요(3글자):</label>
+              <label for="playerName">이름을 입력하세요(10글자):</label>
               <input type="text" class="form-control" id="playerName">
             </div>
           </div>
