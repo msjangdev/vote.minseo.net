@@ -118,6 +118,9 @@
         <!-- 알림 메시지 -->
         <div id="notification"></div>
 
+        <!-- 반복 재생되는 배경 음악 -->
+        <audio id="backgroundMusic" src="../song.mp3" loop autoplay></audio>
+
         <!-- 조작 버튼 -->
         <div class="control-buttons">
             <button id="leftButton" class="btn btn-primary" style="width: 90px; height: 90px; font-size: 25px;">&larr;</button>
@@ -135,7 +138,7 @@
             <div class="modal-body">
               <p id="finalScore">최종 점수: 0</p>
               <div class="form-group">
-                <label for="playerName">이름을 입력하세요(3글자):</label>
+                <label for="playerName">이름을 입력하세요(10글자):</label>
                 <input type="text" class="form-control" id="playerName">
               </div>
             </div>
