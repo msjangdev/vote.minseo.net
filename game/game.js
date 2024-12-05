@@ -465,7 +465,7 @@ function displayHighScores() {
         highScoresList.innerHTML = scores
             .map(score => {
                 // 이름과 점수를 3자로 제한하고 이스케이프 처리
-                const safeName = escapeHTML(score.name.substring(0, 3));
+                const safeName = escapeHTML(score.name.substring(0, 13));
                 const safeScore = escapeHTML(score.score.toString());
                 return `<li>${safeName} - ${safeScore}점</li>`;
             })
